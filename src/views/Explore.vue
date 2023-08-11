@@ -51,7 +51,7 @@ const searchMovies = async () => {
     const data = await getSearch(query.value, currentPage.value)
     searchResults.value = data.results
     totalPages.value = data.total_pages
-    console.log(data.results)
+    
 
     window.scrollTo({ top: 0, behavior: "smooth" })
   } catch (error) {

@@ -1,9 +1,7 @@
 <template>
   <v-parallax
-    :lazy-src="
-      'https://image.tmdb.org/t/p/original' + props.movie.backdrop_path
-    "
-    :src="'https://image.tmdb.org/t/p/original' + props.movie.backdrop_path"
+    :lazy-src="'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path"
+    :src="'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path"
     height="400"
     width="1000"
     class="my-0 mx-auto"
@@ -12,7 +10,7 @@
       <div class="d-flex">
         <img
           :src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
-          alt=""
+          alt="poster"
           height="300"
           class="mx-4 my-12"
         />
@@ -79,6 +77,7 @@
 </template>
 <script setup>
 import { defineProps, ref } from "vue"
+import { useHead } from "@vueuse/head"
 
 const props = defineProps(["movie", "trailer"])
 
@@ -102,6 +101,16 @@ const rating = (percent) => {
 }
 
 const getTrailerUrl = (key) => `https://www.youtube.com/embed/${key}`
+
+useHead({
+  title: `Muvie - ${props.movie.title}`,
+  meta: [
+    {
+      name: `description`,
+      content: `This is ${props.movie.title} movie`,
+    },
+  ],
+})
 </script>
 <style scoped>
 .overlay {

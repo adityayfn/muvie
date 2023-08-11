@@ -18,6 +18,7 @@
             cover
             :lazy-src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
             :src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
+            alt="poster film"
           >
             <v-expand-transition>
               <div
@@ -77,9 +78,6 @@ const formatDate = (isoDate) => {
   return date.toLocaleDateString("en-US", options)
 }
 
-// const truncate = (text, maxLength) => {
-//   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text
-// }
 const colors = ref("")
 
 const rating = (percent) => {

@@ -1,13 +1,9 @@
 import { ref } from "vue"
 import axios from "axios"
-const apiKey = import.meta.env.VITE_API_KEY
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN
 const baseUrl = "https://api.themoviedb.org/3/"
 
 const getMovies = () => {
-  const error = ref(null)
-  const genresName = ref([])
-
   const getPopular = async (page) => {
     try {
       const res = await axios.get(
@@ -33,7 +29,7 @@ const getMovies = () => {
           },
         }
       )
-      console.log(res.data.results)
+
       return res.data.results
     } catch (error) {
       console.log("Error", error)
@@ -50,7 +46,7 @@ const getMovies = () => {
           },
         }
       )
-      console.log(res.data.results)
+
       return res.data.results
     } catch (error) {
       console.log("Error", error)
@@ -188,14 +184,12 @@ const getMovies = () => {
   }
 
   return {
-    error,
     getPopular,
     getTrendingDay,
     getTrendingWeek,
     getTopRated,
     getDiscover,
     getGenre,
-    genresName,
     getSearch,
     getDetails,
     getImagesMovie,

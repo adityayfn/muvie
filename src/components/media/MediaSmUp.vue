@@ -52,6 +52,7 @@
             "
             :src="'https://image.tmdb.org/t/p/original' + backdrop.file_path"
             class="swp"
+            alt="media"
           >
           </v-img>
         </swiper-slide>

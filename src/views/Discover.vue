@@ -51,10 +51,11 @@
 </template>
 <script setup>
 import getMovies from "../composable/Movies"
-
 import CardXs from "../components/card/CardXs.vue"
 import CardSmUp from "../components/card/CardSmUp.vue"
 import { ref, watch, onMounted } from "vue"
+import { useHead } from "@vueuse/head"
+
 const { getDiscover } = getMovies()
 
 const movies = ref([])
@@ -64,7 +65,7 @@ const totalPages = ref(0)
 const fetchMoviesData = async () => {
   try {
     const data = await getDiscover(currentPage.value)
-    console.log(data.results)
+
     movies.value = data.results
     totalPages.value = data.total_pages
 
@@ -79,6 +80,15 @@ onMounted(async () => {
 })
 watch(currentPage, () => {
   fetchMoviesData()
+})
+useHead({
+  title: "Muvie - Discover",
+  meta: [
+    {
+      name: `description`,
+      content: "This is discover collection ",
+    },
+  ],
 })
 </script>
 <style scoped></style>

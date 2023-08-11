@@ -54,6 +54,7 @@ import CastMd from "../components/cast/CastMd.vue"
 import Status from "../components/Status.vue"
 import MediaSmUp from "../components/media/MediaSmUp.vue"
 import MediaXs from "../components/media/MediaXs.vue"
+
 import { ref, onMounted, computed } from "vue"
 import { useRoute } from "vue-router"
 
@@ -65,6 +66,7 @@ const { getDetails, getCharacter, getReviews, getVideos, getImagesMovie } =
   getMovies()
 
 const movie = ref([])
+const title = ref("")
 const cast = ref([])
 
 const reviews = ref([])
@@ -78,6 +80,8 @@ const fetchDetails = async () => {
   try {
     const data = await getDetails(id.value)
     movie.value = data
+    title.value = data.original_title
+    console.log(movie.value)
   } catch (error) {
     console.log(error)
   }

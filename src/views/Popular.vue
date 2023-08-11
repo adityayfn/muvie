@@ -54,6 +54,7 @@
 import getMovies from "../composable/Movies"
 import CardXs from "../components/card/CardXs.vue"
 import CardSmUp from "../components/card/CardSmUp.vue"
+import { useHead } from "@vueuse/head"
 
 import { ref, watch, onMounted } from "vue"
 const { getPopular } = getMovies()
@@ -65,7 +66,7 @@ const totalPages = ref(0)
 const fetchMoviesData = async () => {
   try {
     const data = await getPopular(currentPage.value)
-    console.log(data)
+
     movies.value = data.results
     totalPages.value = data.total_pages
 
@@ -79,6 +80,16 @@ onMounted(async () => {
 })
 watch(currentPage, () => {
   fetchMoviesData()
+})
+
+useHead({
+  title: "Muvie - Popular",
+  meta: [
+    {
+      name: `description`,
+      content: "This is popular collection  ",
+    },
+  ],
 })
 </script>
 <style scoped></style>

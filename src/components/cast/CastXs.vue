@@ -22,6 +22,7 @@
                   'https://image.tmdb.org/t/p/w500' + char.profile_path
                 "
                 :src="'https://image.tmdb.org/t/p/w500' + char.profile_path"
+                alt="character"
               >
               </v-img>
             </figure>

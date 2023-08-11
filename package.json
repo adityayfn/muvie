@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
+    "@vueuse/head": "^1.1.26",
     "axios": "^1.4.0",
     "swiper": "^10.1.0",
     "vue": "^3.2.47",

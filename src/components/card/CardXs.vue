@@ -14,8 +14,9 @@
         <v-img
           :aspect-ratio="12 / 16"
           cover
-          :lazy-src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
-          :src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
+          :lazy-src="'https://image.tmdb.org/t/p/w500' + data.poster_path"
+          :src="'https://image.tmdb.org/t/p/w500' + data.poster_path"
+          alt="poster film"
         >
           <v-expand-transition>
             <div

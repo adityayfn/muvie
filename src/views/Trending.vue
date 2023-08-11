@@ -50,6 +50,7 @@ import getMovies from "../composable/Movies"
 import CardSmUp from "../components/card/CardSmUp.vue"
 import CardXs from "../components/card/CardXs.vue"
 import { ref, onMounted } from "vue"
+import { useHead } from "@vueuse/head"
 const { getTrendingDay, getTrendingWeek } = getMovies()
 
 const day = ref(true)
@@ -62,7 +63,7 @@ const fetchDay = async () => {
   try {
     const dataDay = await getTrendingDay()
     const dataWeek = await getTrendingWeek()
-    console.log(dataDay)
+    
     getDay.value = dataDay
     getWeek.value = dataWeek
 
@@ -74,6 +75,16 @@ const fetchDay = async () => {
 
 onMounted(async () => {
   await fetchDay()
+})
+
+useHead({
+  title: "Muvie - Trending",
+  meta: [
+    {
+      name: `description`,
+      content: "This is trending collection ",
+    },
+  ],
 })
 </script>
 <style scoped></style>

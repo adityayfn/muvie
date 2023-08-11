@@ -1,15 +1,16 @@
 <template>
   <v-parallax
-    :lazy-src="'https://image.tmdb.org/t/p/original' + props.movie.poster_path"
-    :src="'https://image.tmdb.org/t/p/original' + props.movie.poster_path"
+    :lazy-src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
+    :src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
     width="400"
     class="my-0 mx-auto"
+    alt="background"
   >
     <div class="overlay">
       <div class="d-flex flex-column px-4">
         <img
           :src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
-          alt=""
+          alt="poster"
           height="400"
           class="mx-4 my-12"
         />
