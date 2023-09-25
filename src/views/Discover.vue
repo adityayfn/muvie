@@ -68,6 +68,7 @@ const fetchMoviesData = async () => {
 
     movies.value = data.results
     totalPages.value = data.total_pages
+    console.log(data)
 
     window.scrollTo({ top: 0, behavior: "smooth" })
   } catch (error) {

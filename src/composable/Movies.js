@@ -1,4 +1,3 @@
-import { ref } from "vue"
 import axios from "axios"
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN
 const baseUrl = "https://api.themoviedb.org/3/"

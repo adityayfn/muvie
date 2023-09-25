@@ -57,6 +57,7 @@ import MediaXs from "../components/media/MediaXs.vue"
 
 import { ref, onMounted, computed } from "vue"
 import { useRoute } from "vue-router"
+import { useHead } from "@vueuse/head"
 
 const route = useRoute()
 
@@ -81,7 +82,6 @@ const fetchDetails = async () => {
     const data = await getDetails(id.value)
     movie.value = data
     title.value = data.original_title
-    console.log(movie.value)
   } catch (error) {
     console.log(error)
   }
@@ -136,6 +136,15 @@ onMounted(async () => {
   await fetchReviews()
   await fetchVideos()
   await fetchImages()
+  useHead({
+    title: `Muvie - ${movie.value.title || "Wait"}`,
+    meta: [
+      {
+        name: `description`,
+        content: `This is ${movie.value.title} movie`,
+      },
+    ],
+  })
 })
 </script>
 <style scoped>

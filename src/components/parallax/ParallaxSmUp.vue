@@ -77,7 +77,6 @@
 </template>
 <script setup>
 import { defineProps, ref } from "vue"
-import { useHead } from "@vueuse/head"
 
 const props = defineProps(["movie", "trailer"])
 
@@ -101,16 +100,6 @@ const rating = (percent) => {
 }
 
 const getTrailerUrl = (key) => `https://www.youtube.com/embed/${key}`
-
-useHead({
-  title: `Muvie - ${props.movie.title}`,
-  meta: [
-    {
-      name: `description`,
-      content: `This is ${props.movie.title} movie`,
-    },
-  ],
-})
 </script>
 <style scoped>
 .overlay {
