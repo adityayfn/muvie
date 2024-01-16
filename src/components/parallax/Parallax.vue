@@ -1,17 +1,29 @@
 <template>
   <v-parallax
-    :lazy-src="'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path"
-    :src="'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path"
-    height="400"
-    width="1000"
+    :lazy-src="
+      $vuetify.display.smAndUp
+        ? 'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path
+        : 'https://image.tmdb.org/t/p/w500' + props.movie.poster_path
+    "
+    :src="
+      $vuetify.display.smAndUp
+        ? 'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path
+        : 'https://image.tmdb.org/t/p/w500' + props.movie.poster_path
+    "
+    :width="$vuetify.display.smAndUp ? 1000 : 400"
+    :height="$vuetify.display.smAndUp ? 400 : auto"
     class="my-0 mx-auto"
+    alt="background"
   >
     <div class="overlay">
-      <div class="d-flex">
+      <div
+        class="d-flex px-4"
+        :class="$vuetify.display.smAndUp ? 'flex-row' : 'flex-column'"
+      >
         <img
           :src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
           alt="poster"
-          height="300"
+          :height="$vuetify.display.smAndUp ? 300 : 400"
           class="mx-4 my-12"
         />
         <div class="d-flex flex-column my-5">
@@ -22,7 +34,7 @@
               {{ genre.name }}
             </v-chip>
           </div>
-          <p class="gray text-overview">{{ movie.overview }}</p>
+          <p class="gray">{{ movie.overview }}</p>
           <v-row justify="space-around my-4">
             <v-col cols="">
               <v-dialog transition="dialog-bottom-transition" width="auto">
@@ -33,7 +45,7 @@
                   </v-btn>
                 </template>
                 <template v-slot:default="{ isActive }">
-                  <v-card width="700" height="500">
+                  <v-card width="350" height="500">
                     <v-toolbar
                       color="#ff0000"
                       :title="props.movie.title"
@@ -130,7 +142,7 @@ const getTrailerUrl = (key) => `https://www.youtube.com/embed/${key}`
   color: lightgray;
 }
 .frame {
-  width: 700px;
+  width: 350px;
   height: 370px;
 }
 .rating-container {
@@ -141,10 +153,5 @@ const getTrailerUrl = (key) => `https://www.youtube.com/embed/${key}`
 .rating {
   background-color: black;
   border-radius: 50%;
-}
-.text-overview {
-  word-wrap: break-word;
-  white-space: normal;
-  width: 85%;
 }
 </style>

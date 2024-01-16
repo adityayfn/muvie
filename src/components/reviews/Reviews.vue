@@ -4,8 +4,11 @@
       <h1>Reviews</h1>
       <p class="mx-1 mt-1">({{ props.length }})</p>
     </div>
-    <v-card width="" class="my-0 py-4">
-      <div class="d-flex flex-wrap" v-for="review in reviews">
+    <v-card
+      :width="$vuetify.display.smAndUp ? auto : 330"
+      class="my-0 mx-auto py-4"
+    >
+      <div class="d-flex flex-wrap" v-for="review in props.reviews">
         <div v-if="props.length >= 1">
           <div class="d-flex mx-5 height">
             <v-avatar color="info">
@@ -18,7 +21,7 @@
               ></v-img>
             </v-avatar>
 
-            <v-card-title>{{ review.author }}</v-card-title>
+            <v-card-title>{{ review.author }} </v-card-title>
           </div>
           <v-card-subtitle class="text my-2">
             {{ truncate(review.content, 300) }}
@@ -32,19 +35,22 @@
   </v-container>
 </template>
 <script setup>
-import { defineProps, ref } from "vue"
+import { defineProps, onMounted } from "vue"
 
 const props = defineProps(["reviews", "length"])
 
 const truncate = (text, maxLength) => {
   return text.length > maxLength ? text.slice(0, maxLength) : text
 }
+
+console.log(props.reviews.length)
+onMounted(() => {})
 </script>
 <style scoped>
 .text {
   word-wrap: break-word;
   white-space: normal;
-  width: 85%;
+  width: 320px;
 }
 .height {
   height: 50px;

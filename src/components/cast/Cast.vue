@@ -6,15 +6,15 @@
 
     <swiper
       :modules="[Navigation, Pagination, Scrollbar, A11y, Virtual]"
-      :slides-per-view="3"
+      :slides-per-view="1"
       :navigation="{ clickable: true }"
       grab-cursor
       virtual
-      class=""
+      :breakpoints="breakpoints"
     >
       <swiper-slide v-for="char in props.cast">
         <div class="">
-          <div class="card mt-10 shadow-xl mx-5">
+          <div class="card mt-10 shadow-xl mx-14">
             <figure>
               <v-img
                 cover
@@ -27,9 +27,9 @@
               </v-img>
             </figure>
             <div class="card-body text-center mt-1">
-              <h4 class="card-title">
+              <h2 class="card-title">
                 {{ char.name }}
-              </h4>
+              </h2>
               <p class="char">{{ char.character }}</p>
             </div>
           </div>
@@ -54,5 +54,11 @@ import "swiper/css/bundle"
 import { defineProps } from "vue"
 
 const props = defineProps(["cast"])
+
+const breakpoints = {
+  384: { slidesPerView: 1 },
+  768: { slidesPerView: 2 },
+  960: { slidesPerView: 3 },
+}
 </script>
 <style></style>

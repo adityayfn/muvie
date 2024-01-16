@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex flex-wrap">
+  <v-container :class="$vuetify.display.smAndUp ? `d-flex flex-wrap` : ``">
     <v-card
       class="mx-auto my-5 card-container"
       width="300"
@@ -16,8 +16,8 @@
           <v-img
             :aspect-ratio="12 / 16"
             cover
-            :lazy-src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
-            :src="'https://image.tmdb.org/t/p/w780' + data.poster_path"
+            :lazy-src="'https://image.tmdb.org/t/p/w500' + data.poster_path"
+            :src="'https://image.tmdb.org/t/p/w500' + data.poster_path"
             alt="poster film"
           >
             <v-expand-transition>
@@ -47,6 +47,7 @@
           </v-img>
         </v-card>
       </v-hover>
+
       <v-card-text class="rating-container">
         <v-progress-circular
           :model-value="data.vote_average * 10"

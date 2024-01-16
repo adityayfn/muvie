@@ -15,15 +15,15 @@
 
     <v-container>
       <swiper
-        :modules="[Navigation, Pagination, Scrollbar, A11y, Virtual]"
-        :slides-per-view="2"
+        :modules="[Navigation, Scrollbar, A11y, Virtual]"
+        :slides-per-view="1"
         :navigation="{ clickable: true }"
         grab-cursor
         virtual
-        class=""
+        :breakpoints="breakpoints"
         v-if="backdrops"
       >
-        <swiper-slide v-for="backdrop in props.media.backdrops" class="mx-1">
+        <swiper-slide v-for="backdrop in props.media.backdrops" class="">
           <v-img
             cover
             :lazy-src="
@@ -36,12 +36,12 @@
         </swiper-slide>
       </swiper>
       <swiper
-        :modules="[Navigation, Pagination, Scrollbar, A11y, Virtual]"
-        :slides-per-view="5"
+        :modules="[Navigation, Scrollbar, A11y, Virtual]"
+        :slides-per-view="3"
         :navigation="{ clickable: true }"
         grab-cursor
         virtual
-        class=""
+        :breakpoints="breakpoints"
         v-if="posters"
       >
         <swiper-slide v-for="backdrop in props.media.posters" class="mx-1">
@@ -64,22 +64,21 @@
 import { defineProps, ref, watch } from "vue"
 import { Swiper, SwiperSlide } from "swiper/vue"
 import "swiper/css"
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Virtual,
-} from "swiper/modules"
+import { Navigation, Scrollbar, A11y, Virtual } from "swiper/modules"
 
 import "swiper/css"
 import "swiper/css/bundle"
 
 const props = defineProps(["media", "backdropsLength", "postersLength"])
-
 const tab = ref(null)
 const backdrops = ref(true)
 const posters = ref(false)
+
+const breakpoints = {
+  384: { slidesPerView: 1 },
+  768: { slidesPerView: 2 },
+  960: { slidesPerView: 3 },
+}
 </script>
 <style scoped>
 .swp {

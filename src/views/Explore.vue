@@ -3,9 +3,8 @@
     <v-text-field v-model="query" label="Search Movies"></v-text-field>
 
     <div v-if="searchResults.length > 0">
-      <CardXs :movies="searchResults" v-if="$vuetify.display.xs" />
-      <CardSmUp :movies="searchResults" v-if="$vuetify.display.smAndUp" />
-      <div class="text-center my-0 mx-auto" v-if="$vuetify.display.xs">
+      <Card :movies="searchResults" />
+      <div class="text-center my-0 mx-auto">
         <v-pagination
           v-if="totalPages > 1"
           v-model="currentPage"
@@ -15,7 +14,7 @@
           next-icon="mdi-chevron-right"
         ></v-pagination>
       </div>
-      <div class="text-center my-0 mx-auto" v-if="$vuetify.display.smAndUp">
+      <div class="text-center my-0 mx-auto">
         <v-pagination
           v-if="totalPages > 1"
           v-model="currentPage"
@@ -36,8 +35,8 @@
 </template>
 <script setup>
 import getMovies from "../composable/Movies"
-import CardSmUp from "../components/card/CardSmUp.vue"
-import CardXs from "../components/card/CardXs.vue"
+
+import Card from "../components/card/Card.vue"
 import { ref, watch } from "vue"
 const { getSearch } = getMovies()
 
@@ -51,7 +50,6 @@ const searchMovies = async () => {
     const data = await getSearch(query.value, currentPage.value)
     searchResults.value = data.results
     totalPages.value = data.total_pages
-    
 
     window.scrollTo({ top: 0, behavior: "smooth" })
   } catch (error) {
