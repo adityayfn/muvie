@@ -8,35 +8,44 @@
     </v-card>
 
     <v-container class="d-flex flex-wrap">
-      <v-tabs v-model="tab" bg-color="#212121" centered>
-        <v-tab @click=";(day = true), (week = false)">Day</v-tab>
-        <v-tab @click=";(week = true), (day = false)">Week</v-tab>
+      <v-tabs>
+        <v-tab @click="changeTab('Day')">Day</v-tab>
+        <v-tab @click="changeTab('Week')">Week</v-tab>
       </v-tabs>
 
-      <Card :movies="getDay" v-if="day" />
+      <Card :movies="getDay" v-if="tabActive == 'Day'" />
 
-      <Card :movies="getWeek" v-if="week" />
+      <Card :movies="getWeek" v-if="tabActive == 'Week'" />
     </v-container>
   </v-container>
 </template>
-<script setup>
+<script setup lang="ts">
 import getMovies from "../composable/Movies"
 
 import Card from "../components/card/Card.vue"
 import { ref, onMounted } from "vue"
 import { useHead } from "@vueuse/head"
+import { MoviesType } from "../types/"
+
 const { getTrendingDay, getTrendingWeek } = getMovies()
 
-const day = ref(true)
-const week = ref(false)
+const tabActive = ref<string>("Day")
 
-const getDay = ref([])
-const getWeek = ref([])
+const getDay = ref<MoviesType[]>([])
+const getWeek = ref<MoviesType[]>([])
+
+const changeTab = (tab: string) => {
+  tabActive.value = tab
+}
 
 const fetchDay = async () => {
   try {
     const dataDay = await getTrendingDay()
     const dataWeek = await getTrendingWeek()
+
+    if (!dataDay || !dataWeek) {
+      return "Data not Found"
+    }
 
     getDay.value = dataDay
     getWeek.value = dataWeek

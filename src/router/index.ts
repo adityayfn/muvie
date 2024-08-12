@@ -42,7 +42,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  prefetch: true,
 })
 
 export default router

@@ -2,16 +2,16 @@
   <v-parallax
     :lazy-src="
       $vuetify.display.smAndUp
-        ? 'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path
-        : 'https://image.tmdb.org/t/p/w500' + props.movie.poster_path
+        ? 'https://image.tmdb.org/t/p/w500' + props.movie?.backdrop_path
+        : 'https://image.tmdb.org/t/p/w500' + props.movie?.poster_path
     "
     :src="
       $vuetify.display.smAndUp
-        ? 'https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path
-        : 'https://image.tmdb.org/t/p/w500' + props.movie.poster_path
+        ? 'https://image.tmdb.org/t/p/w500' + props.movie?.backdrop_path
+        : 'https://image.tmdb.org/t/p/w500' + props.movie?.poster_path
     "
     :width="$vuetify.display.smAndUp ? 1000 : 400"
-    :height="$vuetify.display.smAndUp ? 400 : auto"
+    :height="$vuetify.display.smAndUp ? 400 : 'auto'"
     class="my-0 mx-auto"
     alt="background"
   >
@@ -21,21 +21,21 @@
         :class="$vuetify.display.smAndUp ? 'flex-row' : 'flex-column'"
       >
         <img
-          :src="'https://image.tmdb.org/t/p/w500' + props.movie.poster_path"
+          :src="'https://image.tmdb.org/t/p/w500' + props.movie?.poster_path"
           alt="poster"
           :height="$vuetify.display.smAndUp ? 300 : 400"
           class="mx-4 my-12"
         />
         <div class="d-flex flex-column my-5">
-          <h1>{{ props.movie.title }}</h1>
-          <p>{{ formatDate(movie.release_date) }}</p>
+          <h1>{{ props.movie?.title }}</h1>
+          <p>{{ formatDate(props.movie?.release_date) }}</p>
           <div class="d-flex flex-wrap">
-            <v-chip v-for="genre in props.movie.genres" class="mx-1 my-1">
+            <v-chip v-for="genre in props.movie?.genres" class="mx-1 my-1">
               {{ genre.name }}
             </v-chip>
           </div>
-          <p class="gray">{{ movie.overview }}</p>
-          <v-row justify="space-around my-4">
+          <p class="gray">{{ props.movie?.overview }}</p>
+          <v-row class="my-4" justify="space-around">
             <v-col cols="">
               <v-dialog transition="dialog-bottom-transition" width="auto">
                 <template v-slot:activator="{ props }">
@@ -73,13 +73,13 @@
         </div>
         <v-card-text class="rating-container">
           <v-progress-circular
-            :model-value="props.movie.vote_average * 10"
-            :color="rating(props.movie.vote_average * 10)"
+            :model-value="props.movie?.vote_average * 10"
+            :color="rating(props.movie?.vote_average * 10)"
             :size="50"
             :width="7"
             class="rating"
             >{{
-              formatVoteAverage(props.movie.vote_average)
+              formatVoteAverage(props.movie?.vote_average)
             }}</v-progress-circular
           >
         </v-card-text>
@@ -87,31 +87,25 @@
     </div>
   </v-parallax>
 </template>
-<script setup>
+<script setup lang="ts">
 import { defineProps, ref } from "vue"
+import { MovieType, VideosType } from "../../types/"
+import { formatDate, formatVoteAverage } from "../../utils/helper"
+const props = defineProps<{
+  movie: MovieType
+  trailer: VideosType
+}>()
 
-const props = defineProps(["movie", "trailer"])
+const colors = ref<string>("")
 
-const formatDate = (isoDate) => {
-  const date = new Date(isoDate)
-  const options = { year: "numeric", month: "long", day: "numeric" }
-  return date.toLocaleDateString("en-US", options)
-}
-
-const formatVoteAverage = (voteAverage) => {
-  const percentage = Math.round(voteAverage * 10)
-  return percentage + "%"
-}
-
-const colors = ref("")
-
-const rating = (percent) => {
+const rating = (percent: number): string => {
   if (percent >= 70) return (colors.value = "green")
   else if (percent < 40) return (colors.value = "red")
   else return (colors.value = "yellow")
 }
 
-const getTrailerUrl = (key) => `https://www.youtube.com/embed/${key}`
+const getTrailerUrl = (key: string): string =>
+  `https://www.youtube.com/embed/${key}`
 </script>
 <style scoped>
 .overlay {

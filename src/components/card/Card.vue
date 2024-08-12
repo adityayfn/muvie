@@ -39,7 +39,7 @@
 
                     <v-divider class="mb-1"></v-divider>
                     <Genre :genre="data.genre_ids" class="" />
-                    <BtnMore :movieId="data.id" />
+                    <BtnMore :movieId="data.id.toString()" />
                   </div>
                 </v-card-item>
               </div>
@@ -61,27 +61,20 @@
     </v-card>
   </v-container>
 </template>
-<script setup>
+<script setup lang="ts">
 import Genre from "../Genre.vue"
 import { defineProps, ref } from "vue"
 import BtnMore from "../BtnMore.vue"
+import { MoviesType } from "../../types/"
+import { formatVoteAverage, formatDate } from "../../utils/helper"
 
-const props = defineProps(["movies"])
+const props = defineProps<{
+  movies: MoviesType[]
+}>()
 
-const formatVoteAverage = (voteAverage) => {
-  const percentage = Math.round(voteAverage * 10)
-  return percentage + "%"
-}
+const colors = ref<string>("")
 
-const formatDate = (isoDate) => {
-  const date = new Date(isoDate)
-  const options = { year: "numeric", month: "long", day: "numeric" }
-  return date.toLocaleDateString("en-US", options)
-}
-
-const colors = ref("")
-
-const rating = (percent) => {
+const rating = (percent: number): string => {
   if (percent >= 70) return (colors.value = "green")
   else if (percent < 40) return (colors.value = "red")
   else return (colors.value = "yellow")

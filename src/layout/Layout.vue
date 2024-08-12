@@ -17,7 +17,7 @@
 
     <v-navigation-drawer v-model="drawer" location="left" temporary>
       <v-list-item
-        v-for="item in items"
+        v-for="item in NavItems"
         :key="item.title"
         :to="item.route"
         link
@@ -37,7 +37,7 @@
 
     <v-navigation-drawer class="pt-5">
       <v-list-item
-        v-for="item in items"
+        v-for="item in NavItems"
         :key="item.title"
         :to="item.route"
         link
@@ -45,7 +45,9 @@
         <v-list-item-content class="d-flex my-3">
           <v-list-item-title class="d-flex">
             <h2>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon :color="route.path == item.route ? 'red' : ''">{{
+                item.icon
+              }}</v-icon>
             </h2>
             <h2 class="mt-1 ml-4">
               {{ item.title }}
@@ -61,38 +63,14 @@
   </v-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 import BarItem from "../components/BarItem.vue"
+import { NavItems } from "../constant/"
+import { useRoute } from "vue-router"
 
-const drawer = ref(false)
-const items = ref([
-  {
-    title: "Home",
-    icon: "mdi-home",
-    route: "/",
-  },
-  {
-    title: "Top Rated",
-    icon: "mdi-star",
-    route: "/toprated",
-  },
-  {
-    title: "Trending",
-    icon: "mdi-chart-line",
-    route: "/trending",
-  },
-  {
-    title: "Popular",
-    icon: "mdi-heart",
-    route: "/popular",
-  },
-  {
-    title: "Explore",
-    icon: "mdi-magnify",
-    route: "/explore",
-  },
-])
+const drawer = ref<boolean>(false)
+const route = useRoute()
 </script>
 
 <style>

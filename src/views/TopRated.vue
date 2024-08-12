@@ -20,22 +20,27 @@
     </div>
   </v-container>
 </template>
-<script setup>
+<script setup lang="ts">
 import getMovies from "../composable/Movies"
 
 import Card from "../components/card/Card.vue"
 import { ref, watch, onMounted } from "vue"
 import { useHead } from "@vueuse/head"
+import { MoviesType } from "../types/"
 
 const { getTopRated } = getMovies()
 
-const movies = ref([])
-const currentPage = ref(1)
-const totalPages = ref(0)
+const movies = ref<MoviesType[]>([])
+const currentPage = ref<number>(1)
+const totalPages = ref<number>(0)
 
 const fetchMoviesData = async () => {
   try {
     const data = await getTopRated(currentPage.value)
+
+    if (!data) {
+      return "Data not found"
+    }
 
     movies.value = data.results
     totalPages.value = data.total_pages

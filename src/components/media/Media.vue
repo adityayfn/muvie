@@ -4,10 +4,10 @@
 
     <v-container class="d-flex flex-wrap">
       <v-tabs v-model="tab" bg-color="#212121" centered>
-        <v-tab @click=";(backdrops = true), (posters = false), (logos = false)"
+        <v-tab @click=";(backdrops = true), (posters = false)"
           >backdrops ({{ props.backdropsLength }})
         </v-tab>
-        <v-tab @click=";(posters = true), (backdrops = false), (logos = false)"
+        <v-tab @click=";(posters = true), (backdrops = false)"
           >posters ({{ props.postersLength }})
         </v-tab>
       </v-tabs>
@@ -17,13 +17,13 @@
       <swiper
         :modules="[Navigation, Scrollbar, A11y, Virtual]"
         :slides-per-view="1"
-        :navigation="{ clickable: true }"
+        :navigation="true"
         grab-cursor
         virtual
         :breakpoints="breakpoints"
         v-if="backdrops"
       >
-        <swiper-slide v-for="backdrop in props.media.backdrops" class="">
+        <swiper-slide v-for="backdrop in props.media?.backdrops" class="">
           <v-img
             cover
             :lazy-src="
@@ -38,13 +38,13 @@
       <swiper
         :modules="[Navigation, Scrollbar, A11y, Virtual]"
         :slides-per-view="3"
-        :navigation="{ clickable: true }"
+        :navigation="true"
         grab-cursor
         virtual
         :breakpoints="breakpoints"
         v-if="posters"
       >
-        <swiper-slide v-for="backdrop in props.media.posters" class="mx-1">
+        <swiper-slide v-for="backdrop in props.media?.posters" class="mx-1">
           <v-img
             cover
             :lazy-src="
@@ -60,16 +60,20 @@
     </v-container>
   </div>
 </template>
-<script setup>
-import { defineProps, ref, watch } from "vue"
+<script setup lang="ts">
+import { defineProps, ref } from "vue"
 import { Swiper, SwiperSlide } from "swiper/vue"
 import "swiper/css"
 import { Navigation, Scrollbar, A11y, Virtual } from "swiper/modules"
-
 import "swiper/css"
 import "swiper/css/bundle"
+import { MediaResultsType } from "../../types/"
 
-const props = defineProps(["media", "backdropsLength", "postersLength"])
+const props = defineProps<{
+  media: MediaResultsType
+  backdropsLength: number
+  postersLength: number
+}>()
 const tab = ref(null)
 const backdrops = ref(true)
 const posters = ref(false)

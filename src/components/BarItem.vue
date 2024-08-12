@@ -8,7 +8,7 @@
   <v-spacer></v-spacer>
 </template>
 
-<script setup></script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .muvie {

@@ -13,17 +13,13 @@
   <v-card-subtitle>Revenue</v-card-subtitle>
   <v-card-title>{{ formatCurrency(props.movie.revenue) }}</v-card-title>
 </template>
-<script setup>
+<script setup lang="ts">
 import { defineProps } from "vue"
+import { MovieType } from "../types/"
+import { formatCurrency } from "../utils/helper"
 
-const props = defineProps(["movie"])
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat("en-Us", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 3,
-  }).format(value)
-}
+const props = defineProps<{
+  movie: MovieType
+}>()
 </script>
 <style></style>

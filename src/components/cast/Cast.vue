@@ -7,7 +7,7 @@
     <swiper
       :modules="[Navigation, Pagination, Scrollbar, A11y, Virtual]"
       :slides-per-view="1"
-      :navigation="{ clickable: true }"
+      :navigation="true"
       grab-cursor
       virtual
       :breakpoints="breakpoints"
@@ -38,7 +38,7 @@
     </swiper>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue"
 import "swiper/css"
 import {
@@ -52,8 +52,11 @@ import {
 import "swiper/css"
 import "swiper/css/bundle"
 import { defineProps } from "vue"
+import { CastType } from "../../types/"
 
-const props = defineProps(["cast"])
+const props = defineProps<{
+  cast: CastType[]
+}>()
 
 const breakpoints = {
   384: { slidesPerView: 1 },

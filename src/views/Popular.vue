@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-card class="d-flex">
       <h2>
         <v-icon color="red" class="ml-1 mt-2" icon="mdi-heart"></v-icon>
@@ -20,25 +20,27 @@
       ></v-pagination>
     </div>
   </v-container>
-
- 
 </template>
-<script setup>
+<script setup lang="ts">
 import getMovies from "../composable/Movies"
 import Card from "../components/card/Card.vue"
 import { useHead } from "@vueuse/head"
-
 import { ref, watch, onMounted } from "vue"
+import { MoviesType } from "../types/"
+
 const { getPopular } = getMovies()
 
-const movies = ref([])
-const currentPage = ref(1)
-const totalPages = ref(0)
+const movies = ref<MoviesType[]>([])
+const currentPage = ref<number>(1)
+const totalPages = ref<number>(0)
 
 const fetchMoviesData = async () => {
   try {
     const data = await getPopular(currentPage.value)
 
+    if (!data) {
+      return "Data not found"
+    }
     movies.value = data.results
     totalPages.value = data.total_pages
 

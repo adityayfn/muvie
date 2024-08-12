@@ -5,7 +5,7 @@
       <p class="mx-1 mt-1">({{ props.length }})</p>
     </div>
     <v-card
-      :width="$vuetify.display.smAndUp ? auto : 330"
+      :width="$vuetify.display.smAndUp ? 'auto' : 330"
       class="my-0 mx-auto py-4"
     >
       <div class="d-flex flex-wrap" v-for="review in props.reviews">
@@ -34,17 +34,18 @@
     </v-card>
   </v-container>
 </template>
-<script setup>
-import { defineProps, onMounted } from "vue"
+<script setup lang="ts">
+import { defineProps } from "vue"
+import { ReviewsType } from "../../types/"
 
-const props = defineProps(["reviews", "length"])
+const props = defineProps<{
+  reviews: ReviewsType[]
+  length: number
+}>()
 
-const truncate = (text, maxLength) => {
+const truncate = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.slice(0, maxLength) : text
 }
-
-console.log(props.reviews.length)
-onMounted(() => {})
 </script>
 <style scoped>
 .text {

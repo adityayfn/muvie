@@ -1,9 +1,19 @@
 import axios from "axios"
+import {
+  CastResultsType,
+  DatasType,
+  GenresType,
+  MediaResultsType,
+  MoviesType,
+  MovieType,
+  ReviewsResultsType,
+  VideosResultsType,
+} from "../types"
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN
 const baseUrl = "https://api.themoviedb.org/3/"
 
 const getMovies = () => {
-  const getPopular = async (page) => {
+  const getPopular = async (page: number) => {
     try {
       const res = await axios.get(
         `${baseUrl}movie/popular?language=en-US&page=${page}`,
@@ -13,7 +23,8 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+
+      return res.data as DatasType
     } catch (error) {
       console.log("Error", error)
     }
@@ -29,7 +40,7 @@ const getMovies = () => {
         }
       )
 
-      return res.data.results
+      return res.data.results as MoviesType[]
     } catch (error) {
       console.log("Error", error)
     }
@@ -46,13 +57,13 @@ const getMovies = () => {
         }
       )
 
-      return res.data.results
+      return res.data.results as MoviesType[]
     } catch (error) {
       console.log("Error", error)
     }
   }
 
-  const getTopRated = async (page) => {
+  const getTopRated = async (page: number) => {
     try {
       const res = await axios.get(
         `${baseUrl}movie/top_rated?language=en-US&page=${page}`,
@@ -62,12 +73,12 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+      return res.data as DatasType
     } catch (error) {
       console.log("Error", error)
     }
   }
-  const getDiscover = async (page) => {
+  const getDiscover = async (page: number) => {
     try {
       const res = await axios.get(
         `${baseUrl}discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=vote_count.desc`,
@@ -77,7 +88,7 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+      return res.data as DatasType
     } catch (error) {
       console.log("Error", error)
     }
@@ -89,14 +100,14 @@ const getMovies = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-
-      return res.data
+      console.log(res.data)
+      return res.data.genres as GenresType[]
     } catch (error) {
       console.log(error)
     }
   }
 
-  const getSearch = async (query, page) => {
+  const getSearch = async (query: string, page: number) => {
     try {
       const res = await axios.get(
         `${baseUrl}search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
@@ -106,37 +117,37 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+      return res.data as DatasType
     } catch (error) {
       console.log("Error", error)
     }
   }
 
-  const getDetails = async (id) => {
+  const getDetails = async (id: string | string[]) => {
     try {
       const res = await axios.get(`${baseUrl}movie/${id}?language=en-US`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-      return res.data
+      return res.data as MovieType
     } catch (error) {
       console.log("Error", error)
     }
   }
-  const getImagesMovie = async (id) => {
+  const getMovieMedia = async (id: string | string[]) => {
     try {
       const res = await axios.get(`${baseUrl}movie/${id}/images`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-      return res.data
+      return res.data as MediaResultsType
     } catch (error) {
       console.log("Error", error)
     }
   }
-  const getCharacter = async (id) => {
+  const getCharacter = async (id: string | string[]) => {
     try {
       const res = await axios.get(
         `${baseUrl}movie/${id}/credits?language=en-US`,
@@ -146,12 +157,13 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+
+      return res.data as CastResultsType
     } catch (error) {
       console.log("Error", error)
     }
   }
-  const getReviews = async (id) => {
+  const getReviews = async (id: string | string[]) => {
     try {
       const res = await axios.get(
         `${baseUrl}movie/${id}/reviews?language=en-US&page=1`,
@@ -161,12 +173,12 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+      return res.data as ReviewsResultsType
     } catch (error) {
       console.log("Error", error)
     }
   }
-  const getVideos = async (id) => {
+  const getVideos = async (id: string | string[]) => {
     try {
       const res = await axios.get(
         `${baseUrl}movie/${id}/videos?language=en-US`,
@@ -176,7 +188,7 @@ const getMovies = () => {
           },
         }
       )
-      return res.data
+      return res.data as VideosResultsType
     } catch (error) {
       console.log("Error", error)
     }
@@ -191,7 +203,7 @@ const getMovies = () => {
     getGenre,
     getSearch,
     getDetails,
-    getImagesMovie,
+    getMovieMedia,
     getCharacter,
     getReviews,
     getVideos,
